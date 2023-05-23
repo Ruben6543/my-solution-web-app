@@ -12,6 +12,7 @@ import { Operation } from 'src/app/shared/operations/default-operations';
 import { Music } from '../../models/music.types';
 import { MusicService } from '../../services/music.service';
 import { CreateEditComponent } from '../create-edit/create-edit.component';
+import { DeleteElementComponent } from '../delete-element';
 
 @Component({
   selector: 'app-music-table',
@@ -72,25 +73,49 @@ export class MusicTableComponent implements OnInit {
   createMusic(): void
   {
     const dialogCreate = this.dialog.open(CreateEditComponent, {
-      width: '500px',
-      height: '600px',
+      width: '400px',
+      height: '400px',
       data: {'operation': Operation.Create}
-        });
+    });
         
-        dialogCreate.afterClosed().pipe(
-          map(() => {
-              this.fetchMusic;
-          })
-      ).subscribe();    
+    dialogCreate.afterClosed().pipe(
+      map(() => {
+          this.fetchMusic();
+      })).subscribe();    
   }
 
-  updateMusic(id: number): void
-  {
-    console.log("Add buton Functionality");
+  updateMusic(music: Music): void {
+    const dialogCreate = this.dialog.open(CreateEditComponent, {
+      width: '400px',
+      height: '400px',
+      data: {
+        'id': music.id,
+        'title': music.title,
+        'genre': music.genre,
+        'operation': Operation.Update
+      }
+    });
+  
+    dialogCreate.afterClosed().pipe(
+      map(() => {
+        this.fetchMusic();
+      })).subscribe();
   }
+  
   
   deleteMusic(id: number):void
   {
-    console.log("Add buton Functionality");
+    const dialogCreate = this.dialog.open(DeleteElementComponent, {
+      width: '300px',
+      height: '200px',
+      data: {
+        'id': id,
+      }
+    });
+  
+    dialogCreate.afterClosed().pipe(
+      map(() => {
+        this.fetchMusic();
+      })).subscribe();
   }
 }

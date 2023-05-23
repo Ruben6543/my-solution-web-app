@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, catchError, map, pipe, retry, take, tap, throwError } from "rxjs";
-import { Music } from "../models/music.types";
+import { CreateMusic, Music } from "../models/music.types";
 
 
 export class ConfigService {
@@ -10,7 +10,7 @@ export class ConfigService {
 
 @Injectable()
 export class MusicService {
-    private apiUrl = 'https://localhost:7174/api/musics'; // Replace with your API URL
+    private apiUrl = 'https://localhost:7174/api/musics';
   
     constructor(private http: HttpClient) {}
   
@@ -23,8 +23,8 @@ export class MusicService {
       return this.http.get<Music>(url);
     }
   
-    createMusic(music: Music): Observable<Music> {
-      return this.http.post<Music>(this.apiUrl, music);
+    createMusic(music: CreateMusic): Observable<CreateMusic> {
+      return this.http.post<CreateMusic>(this.apiUrl, music);
     }
 
     updateMusic(music: Music): Observable<Music> {

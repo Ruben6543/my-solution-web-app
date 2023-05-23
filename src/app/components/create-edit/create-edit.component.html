@@ -1,6 +1,41 @@
-<h1>Add Music</h1>
+<div>
+  <h2 class="mat-card mat-title">{{ FormTitle }}</h2>
+</div>
 
-<mat-form-field>
-  <mat-label>Hola</mat-label>
-  <input matInput>
-</mat-form-field>
+<form [formGroup]="profileForm" class="form-container">
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" *ngIf="OperationToDO === 'Create'; else updateInput" />
+          <ng-template #updateInput>
+            <input matInput  [(ngModel)]="TitleInput" formControlName="title"/>
+          </ng-template>  
+          <mat-error *ngIf="profileForm.get('title')?.hasError('required')">Title is required</mat-error>
+          <mat-error *ngIf="profileForm.get('title')?.hasError('maxlength')">Title cannot exceed 10 characters</mat-error>
+          <mat-error *ngIf="profileForm.get('title')?.hasError('minlength')">Title cannot be less than 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="genre" *ngIf="OperationToDO === 'Create'; else updateSelect">
+            <mat-option value="rock">Rock</mat-option>
+            <mat-option value="pop">Pop</mat-option>
+          </mat-select>
+          <ng-template #updateSelect>
+            <mat-select  [(ngModel)]="GenreInput" formControlName="genre">
+              <mat-option value="rock">Rock</mat-option>
+              <mat-option value="pop">Pop</mat-option>
+            </mat-select>
+          </ng-template>
+          <mat-error *ngIf="profileForm.get('genre')?.hasError('required')">Genre is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [disabled]="profileForm.invalid" (click)="saveMusicForm()">Save Music</button>
+  </mat-card-actions>
+</form>
