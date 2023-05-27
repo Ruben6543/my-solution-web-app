@@ -10,7 +10,7 @@ export class ConfigService {
 
 @Injectable()
 export class MusicService {
-    private apiUrl = 'https://localhost:7174/api/musics';
+    private apiUrl = 'http://localhost:51234/api/v1/musics';
   
     constructor(private http: HttpClient) {}
   
